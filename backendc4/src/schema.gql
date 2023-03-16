@@ -1,0 +1,38 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Game {
+  id: Int!
+  winner: String
+  playerTurn: Int!
+  gameBoard: [JSON!]
+  isGameFinished: Boolean!
+  currentGameID: Int!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type User {
+  id: Int!
+
+  """User's Username"""
+  username: String!
+
+  """User's Password"""
+  password: String!
+
+  """User's Game ID"""
+  gameId: String
+
+  """Games that the user has played"""
+  gamesPlayed: [Game!]
+}
+
+type Query {
+  getAllUsers: [User!]!
+  findUserbyId(id: Int!): User!
+}

@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -15,10 +15,15 @@ model User {
   username String? @unique
   password String?
   gameId String? @unique
+  gamesPlayed Game[]
 }
 
 model Game{
   id Int @id @default(autoincrement())
   winner String?
   playerTurn Int
+  gameBoard Json[]
+  isGameFinished Boolean
+  currentGame User @relation(fields: [currentGameID], references: [id])
+  currentGameID Int
 }
