@@ -25,7 +25,7 @@ export class UsersService {
     const { id } = params;
     return this.prismaService.user.findUnique({
       where: {
-        id: id,
+        id: Number(id),
       },
     });
   }
@@ -37,7 +37,7 @@ export class UsersService {
     const { id, data } = params;
     return this.prismaService.user.update({
       where: {
-        id: id,
+        id: Number(id),
       },
       data: data,
     });
@@ -60,5 +60,30 @@ export class UsersService {
     return this.prismaService.user.create({
       data: { username, password, gameCreationId },
     });
+  }
+
+  async createGameStatePlayerArray(params: {
+    playerOneId: number;
+    playerTwoId: number;
+  }) {
+    const { playerOneId, playerTwoId } = params;
+    const playerArray: IUser[] = [];
+
+    const playerOne = await this.prismaService.user.findUnique({
+      where: { id: Number(playerOneId) },
+    });
+    const playerTwo = await this.prismaService.user.findUnique({
+      where: { id: Number(playerTwoId) },
+    });
+
+    playerArray[0] = playerOne;
+    playerArray[1] = playerTwo;
+
+    return playerArray;
+  }
+
+  async findAll(param: { userId: number }) {
+    const { userId } = param;
+    return this.prismaService.user.findMany({ where: { id: userId } });
   }
 }

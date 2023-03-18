@@ -2,20 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Game {
-  id: Int!
-  winner: String
-  playerTurn: Int!
-  gameBoard: [JSON!]
-  isGameFinished: Boolean!
-  currentGameID: Int!
-}
-
-"""
-The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-"""
-scalar JSON
-
 type User {
   """User's Id"""
   id: Int!
@@ -26,14 +12,18 @@ type User {
   """User's Password"""
   password: String!
 
-  """User's Game ID"""
-  gameId: String
+  """User's Game Creation ID"""
+  gameCreationId: String
 
-  """Games that the user has played"""
-  gamesPlayed: [Game!]
+  """User's Current Game Session ID"""
+  currentGameSessionID: Int
 }
 
 type Query {
   getAllUsers: User!
-  findUserbyId(id: Int!): User!
+  getUsersById(id: Int!): User!
+}
+
+type Mutation {
+  createPlayersArray(playerOneId: Int!, playerTwoId: Int!): User!
 }
