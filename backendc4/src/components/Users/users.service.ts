@@ -50,7 +50,7 @@ export class UsersService {
     const { username, userPassword } = params;
 
     const password: string = await hashPassword(userPassword);
-    const gameId: string = this.jwtService.sign(
+    const gameCreationId: string = this.jwtService.sign(
       { username, password },
       {
         secret: process.env.JWT_SECRET_KEY,
@@ -58,7 +58,7 @@ export class UsersService {
       },
     );
     return this.prismaService.user.create({
-      data: { username, password, gameId },
+      data: { username, password, gameCreationId },
     });
   }
 }

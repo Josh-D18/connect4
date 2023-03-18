@@ -1,5 +1,4 @@
 import { Args, Int, Query, Resolver } from '@nestjs/graphql';
-import { Game } from '../Game/models/game.model';
 import { IUser } from './interfaces/users.interface';
 import { User } from '../../components/Users/models/users.model';
 import { UsersService } from './users.service';
