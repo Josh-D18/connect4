@@ -30,7 +30,10 @@ export class UsersService {
     });
   }
 
-  async updateUserById(params: { id: number; data: { password: string } }) {
+  async updateUserById(params: {
+    id: number;
+    data: { password: string };
+  }): Promise<IUser> {
     const { id, data } = params;
     return this.prismaService.user.update({
       where: {
@@ -40,14 +43,22 @@ export class UsersService {
     });
   }
 
-  async createUser(params: { username: string; password: string }) {
-    const { username, password } = params;
-    this.jwtService.sign(params, {
-      secret: '',
-    });
-    const hashedPassword: string = await hashPassword(password);
+  async createUser(params: {
+    username: string;
+    userPassword: string;
+  }): Promise<IUser> {
+    const { username, userPassword } = params;
+
+    const password: string = await hashPassword(userPassword);
+    const gameId: string = this.jwtService.sign(
+      { username, password },
+      {
+        secret: process.env.JWT_SECRET_KEY,
+        expiresIn: '20m',
+      },
+    );
     return this.prismaService.user.create({
-      data: { username, hashedPassword },
+      data: { username, password, gameId },
     });
   }
 }

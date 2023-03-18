@@ -4,7 +4,7 @@ import { UsersService } from '../Users/users.service';
 import { AuthService } from './auth.service';
 
 @Controller()
-export class AppController {
+export class AuthController {
   constructor(
     private authService: AuthService,
     private userService: UsersService,

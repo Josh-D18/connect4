@@ -1,23 +1,30 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import GraphQLJSON from 'graphql-type-json';
+import { User } from '../../Users/models/users.model';
 
 @ObjectType()
 export class Game {
-  @Field(() => Int)
+  @Field(() => Int, { description: 'Game ID' })
   id: number;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String, { nullable: true, description: 'Winner of the game' })
   winner: string;
 
-  @Field(() => Int)
+  @Field(() => Int, { description: 'Player"s Turn' })
   playerTurn: number;
 
-  @Field(() => [GraphQLJSON], { nullable: true })
+  @Field(() => [GraphQLJSON], { nullable: true, description: 'Game Board' })
   gameBoard: JSON[];
 
-  @Field(() => Boolean)
+  @Field(() => Boolean, {
+    nullable: true,
+    description: 'True if game is over and false if game is still ongoing',
+  })
   isGameFinished: boolean;
 
-  @Field(() => Int)
-  currentGameID: number;
+  @Field(() => [User], {
+    nullable: true,
+    description: 'Players currently playing',
+  })
+  players: User[];
 }

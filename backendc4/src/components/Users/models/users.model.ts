@@ -1,9 +1,8 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Game } from 'src/components/Game/models/game.model';
 
 @ObjectType()
 export class User {
-  @Field(() => Int)
+  @Field(() => Int, { description: "User's Id" })
   id: number;
 
   @Field(() => String, { description: "User's Username" })
@@ -12,12 +11,15 @@ export class User {
   @Field(() => String, { description: "User's Password" })
   password: string;
 
-  @Field(() => String, { nullable: true, description: "User's Game ID" })
-  gameId: string | null;
-
-  @Field(() => [Game], {
+  @Field(() => String, {
     nullable: true,
-    description: 'Games that the user has played',
+    description: "User's Game Creation ID",
   })
-  gamesPlayed: Game[];
+  gameCreationId: string | null;
+
+  @Field(() => Int, {
+    nullable: true,
+    description: "User's Current Game Session ID",
+  })
+  currentGameSessionID: number;
 }
