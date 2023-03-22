@@ -13,6 +13,7 @@ import { Game } from './models/game.model';
 import { IGame } from './interfaces/game.interface';
 import { User } from '../Users/models/users.model';
 import { PostGameArgs } from './dto/post-game-args';
+import { GetUserArgs } from './dto/get-userID-args';
 
 @Resolver(() => Game)
 export class GameResolver {
@@ -21,9 +22,16 @@ export class GameResolver {
     private userService: UsersService,
   ) {}
 
-  //   @Query(() => [Game])
+  @Query(() => [Game])
+  async getAllGamesResolver(): Promise<IGame[]> {
+    return this.gameService.getAllGames();
+  }
 
-  //   @Query(() => Game)
+  @Query(() => Game)
+  async getGameByIdResolver(args: { id: number }): Promise<IGame> {
+    const { id } = args;
+    return this.gameService.getGamebyId({ id });
+  }
 
   @Mutation(() => Game)
   async createGameBoardResolver(): Promise<IGame> {
@@ -38,11 +46,8 @@ export class GameResolver {
   }
 
   @Mutation(() => Game)
-  async addPlayersToGameState(
-    @Args('id', { type: () => Int }) id: number,
-    @Args('players') playersInGame: User[],
-  ): Promise<IGame> {
-    return this.gameService.addPlayersToGameState({ id, playersInGame });
+  async addPlayersToGameState(args: GetUserArgs): Promise<IGame> {
+    return this.gameService.addPlayersToGameState({ ...args });
   }
 
   @ResolveField('users', () => [User])

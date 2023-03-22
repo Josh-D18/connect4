@@ -19,11 +19,37 @@ type User {
   currentGameSessionID: Int
 }
 
+type Game {
+  """Game ID"""
+  id: Int!
+
+  """Winner of the game"""
+  winner: String
+
+  """Player"s Turn"""
+  playerTurn: Int!
+
+  """Game Board"""
+  gameBoard: String
+
+  """True if game is over and false if game is still ongoing"""
+  isGameFinished: Boolean
+
+  """Players currently playing"""
+  players: [User!]
+  users: [User!]!
+}
+
 type Query {
   getAllUsers: User!
   getUsersById(id: Int!): User!
+  getAllGamesResolver: [Game!]!
+  getGameByIdResolver: Game!
 }
 
 type Mutation {
   createPlayersArray(playerOneId: Int!, playerTwoId: Int!): User!
+  createGameBoardResolver: Game!
+  updateGameStateResolver: Game!
+  addPlayersToGameState: Game!
 }

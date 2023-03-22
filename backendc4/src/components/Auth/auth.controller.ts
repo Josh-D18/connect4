@@ -12,7 +12,7 @@ export class AuthController {
 
   @Post('auth/login')
   async login(@Request() req) {
-    return this.authService.login(req.user);
+    return this.authService.login(req.body);
   }
 
   @Post('auth/signup')

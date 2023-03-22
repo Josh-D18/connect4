@@ -8,6 +8,19 @@ import { IGame } from './interfaces/game.interface';
 export class GameService {
   constructor(private prismaService: PrismaService) {}
 
+  async getAllGames(): Promise<IGame[]> {
+    return this.prismaService.game.findMany();
+  }
+
+  async getGamebyId(params: { id: number }): Promise<IGame> {
+    const { id } = params;
+    return this.prismaService.game.findUnique({
+      where: {
+        id: id,
+      },
+    });
+  }
+
   async createGameBoard(): Promise<IGame> {
     const gameBoard: string = JSON.stringify(generateGameBoard());
     return this.prismaService.game.create({
